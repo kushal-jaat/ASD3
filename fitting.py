@@ -13,21 +13,21 @@ def linear_model(x, a, b):
 def read_worldbank_data(file_path):
     df = pd.read_csv(file_path, index_col='Country Name')
     df.drop(['Country Code', 'Indicator Name', 'Indicator Code'], axis=1, inplace=True)
-    df_years = df.T
-    df_years.index.name = 'Year'
-    df_years.columns.name = 'Country Name'
-    df_years.index = pd.to_datetime(df_years.index, format='%Y').year
-    return df_years
+    dfyears = df.T
+    dfyears.index.name = 'Year'
+    dfyears.columns.name = 'Country Name'
+    dfyears.index = pd.to_datetime(dfyears.index, format='%Y').year
+    return dfyears
 
 # Reading agriculture land data
 file_path = "population.csv"
-df_years = read_worldbank_data(file_path)
+dfyears = read_worldbank_data(file_path)
 
 # Select data from 1990 to 2022
-df_years = df_years.loc[(df_years.index >= 1970) & (df_years.index <= 2022)]
+dfyears = dfyears.loc[(dfyears.index >= 1970) & (dfyears.index <= 2022)]
 
 # Select United Kingdom
-country_data = df_years['Italy'].dropna()
+country_data = dfyears['Italy'].dropna()
 x_data = country_data.index.values
 y_data = country_data.values
 
@@ -54,7 +54,7 @@ rectangle = Rectangle((box_start_year, plt.ylim()[0]), 2023 - box_start_year, pl
 plt.gca().add_patch(rectangle)
 
 plt.xlabel('Year')
-plt.ylabel('Agriculture Land')
-plt.title('Italy')
+plt.ylabel('population')
+plt.title('Italy population ')
 plt.legend()
 plt.show()
